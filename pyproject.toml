@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "notion"
+version = "0.1.0"
+description = ""
+authors = ["Tomas Votava <info@tomasvotava.eu>", "Renata Hlavova <hlavova.renata@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.971"
+pylint = "^2.14.5"
+poethepoet = "^0.16.0"
+black = "^22.6.0"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+bandit = "^1.7.4"
+pdoc3 = "^0.10.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --cov=notion --cov-report xml:cov.xml"
+
+
+[tool.pyright]
+ignore = ["**/tests"]
+
+[tool.poe.tasks]
+mypy = "mypy --config-file mypy.ini notion"
+pylint = "pylint notion"
+format = "black notion"
+test = "python -m pytest"
+coverage = "coverage report"
+bandit = "bandit -r notion/"
+docs = "pdoc3 --html --output-dir ./.public notion"
+
+lint = ["mypy", "pylint"]
+
